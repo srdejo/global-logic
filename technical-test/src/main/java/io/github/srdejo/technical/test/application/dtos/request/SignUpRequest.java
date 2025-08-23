@@ -2,6 +2,7 @@ package io.github.srdejo.technical.test.application.dtos.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -10,11 +11,13 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class SignUpRequest {
     private String name;
 
     @NotBlank(message = "El email es obligatorio")
-    @Email(message = "Formato de correo inválido")
+    @Email(message = "El correo debe tener formato válido")
+    @Pattern(regexp = ".+@.+\\..+", message = "El correo debe tener formato válido")
     private String email;
 
     @NotBlank(message = "La contraseña es obligatoria")

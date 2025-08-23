@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
                 .map(err -> ErrorDetail.builder()
                         .timestamp(LocalDateTime.now())
                         .codigo(HttpStatus.BAD_REQUEST.value())
-                        .detail(err.getField() + " " + err.getDefaultMessage())
+                        .detail(err.getDefaultMessage())
                         .build())
                 .collect(Collectors.toList());
 

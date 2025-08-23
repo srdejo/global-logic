@@ -1,6 +1,7 @@
 package io.github.srdejo.technical.test.domain.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@NoArgsConstructor
 public class User {
     @Id
     private UUID id;

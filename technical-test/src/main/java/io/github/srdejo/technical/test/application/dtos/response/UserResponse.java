@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -17,8 +16,4 @@ public class UserResponse {
     private LocalDateTime lastLogin;
     private String token;
     private boolean isActive;
-    private String name;
-    private String email;
-    private String password;
-    private List<PhoneResponse> phones;
 }

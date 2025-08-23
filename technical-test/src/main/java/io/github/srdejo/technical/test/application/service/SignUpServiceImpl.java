@@ -7,7 +7,6 @@ import io.github.srdejo.technical.test.domain.entities.User;
 import io.github.srdejo.technical.test.domain.exceptions.UserAlreadyExistsException;
 import io.github.srdejo.technical.test.domain.service.SignUpService;
 import io.github.srdejo.technical.test.infrastructure.repositories.UserRepository;
-import io.github.srdejo.technical.test.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,13 +16,13 @@ import org.springframework.stereotype.Service;
 public class SignUpServiceImpl implements SignUpService {
 
     private final UserRepository userRepository;
-    private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Override
     public UserResponse register(SignUpRequest request) {
         userRepository.findByEmail(request.getEmail()).ifPresent(user -> {
-            throw new UserAlreadyExistsException("User already exists");
+            throw new UserAlreadyExistsException("Ya existe un usuario con este email");
         });
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
@@ -31,7 +30,7 @@ public class SignUpServiceImpl implements SignUpService {
         User user = UserMapper.toEntity(request, encodedPassword);
         userRepository.save(user);
 
-        String token = jwtUtil.generateToken(user.getEmail());
+        String token = jwtService.generateToken(user.getEmail());
 
         return UserMapper.toResponse(user, token);
     }
